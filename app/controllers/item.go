@@ -22,7 +22,10 @@ func ListItem(c *gin.Context) {
 
 func ShowItem(c *gin.Context) {
 	name := c.Param("name")
-	data := models.GetItem(name)
+	data, err := models.GetItem(name)
+	if err != nil {
+		log.Println(err)
+	}
 	c.HTML(http.StatusOK, "item/show.html", gin.H{
 		"item": data,
 	})
@@ -53,7 +56,10 @@ func SettingItem(c *gin.Context) {
 		isUpdate = "success"
 	}
 
-	data := models.GetItem(name)
+	data, err := models.GetItem(name)
+	if err != nil {
+		log.Println(err)
+	}
 	c.HTML(http.StatusOK, "item/setting.html", gin.H{
 		"item":   data,
 		"update": isUpdate,

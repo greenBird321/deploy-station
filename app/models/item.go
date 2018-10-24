@@ -7,6 +7,7 @@ import (
 	"log"
 	"time"
 	"strings"
+	"fmt"
 )
 
 func ListItem() ([]map[string]string, error) {
@@ -40,18 +41,19 @@ func ListItem() ([]map[string]string, error) {
 	return data, nil
 }
 
-func GetItem(name string) map[string]string {
+func GetItem(name string) (map[string]string, error) {
 	var repo_url, repo_type, repo_private_key, remark, notify string
-	var ctime, mtime int64
+	var id, ctime, mtime int64
 
-	sql := "SELECT name, repo_url, repo_type, repo_private_key, remark, notify, ctime, mtime FROM items WHERE name=? LIMIT 1"
+	sql := "SELECT id, name, repo_url, repo_type, repo_private_key, remark, notify, ctime, mtime FROM items WHERE name=? LIMIT 1"
 	row := service.Db().QueryRow(sql, name)
-	err := row.Scan(&name, &repo_url, &repo_type, &repo_private_key, &remark, &notify, &ctime, &mtime)
+	err := row.Scan(&id, &name, &repo_url, &repo_type, &repo_private_key, &remark, &notify, &ctime, &mtime)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	data := make(map[string]string)
+	data["id"] = fmt.Sprintf("%d", id)
 	data["name"] = name
 	data["repo_url"] = repo_url
 	data["repo_type"] = repo_type
@@ -61,7 +63,7 @@ func GetItem(name string) map[string]string {
 	data["ctime"] = time.Unix(ctime, 0).Format("2006-01-02 15:04")
 	data["mtime"] = time.Unix(mtime, 0).Format("2006-01-02 15:04")
 
-	return data
+	return data, nil
 }
 
 func UpdateItem(name string, data map[string]string) error {
