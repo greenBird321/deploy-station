@@ -2,11 +2,10 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"DeployStation/app/service"
 	"net/http"
 	"log"
 	"time"
-	"DeployStation/app/models"
+	"deploy-station/app/models"
 	"fmt"
 )
 

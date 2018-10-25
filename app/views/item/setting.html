@@ -1,0 +1,186 @@
+{{ define "item/setting.html" }}
+<!DOCTYPE html>
+<html lang="en">
+
+	<!-- begin::Head -->
+	<head>
+		<meta charset="utf-8" />
+		<title>部署系统 - Deploy Station</title>
+		<meta name="description" content="Latest updates and statistic charts">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+
+		<!--begin::Web font -->
+		<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+		<script>
+			WebFont.load({
+				google: {
+					"families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"]
+				},
+				active: function() {
+					sessionStorage.fonts = true;
+				}
+			});
+		</script>
+
+		<!--end::Web font -->
+
+		<!--begin::Page Vendors Styles -->
+		<link href="/assets/vendors/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+
+		<!--RTL version:<link href="/assets/vendors/custom/fullcalendar/fullcalendar.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
+
+		<!--end::Page Vendors Styles -->
+
+		<!--begin::Base Styles -->
+		<link href="/assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
+
+		<!--RTL version:<link href="/assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
+		<link href="/assets/demo/demo2/base/style.bundle.css" rel="stylesheet" type="text/css" />
+
+		<!--RTL version:<link href="/assets/demo/demo2/base/style.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
+
+		<!--end::Base Styles -->
+		<link rel="shortcut icon" href="/assets/demo/demo2/media/img/logo/favicon.ico" />
+	</head>
+
+	<!-- end::Head -->
+
+	<!-- begin::Body -->
+	<body class="m-page--wide m-header--fixed m-header--fixed-mobile m-footer--push m-aside--offcanvas-default">
+
+		<!-- begin:: Page -->
+		<div class="m-grid m-grid--hor m-grid--root m-page">
+
+			{{template "header.html" }}
+
+			<!-- begin::Body -->
+			<div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver-desktop m-grid--desktop 	m-container m-container--responsive m-container--xxl m-page__container m-body">
+				<div class="m-grid__item m-grid__item--fluid m-wrapper">
+
+
+					<div class="m-content">
+
+						<!--Begin::Section-->
+						<div class="row">
+							<div class="col-xl-12">
+
+                                <!--begin::Portlet-->
+                                <div class="m-portlet m-portlet--tab">
+                                    <div class="m-portlet__head">
+                                        <div class="m-portlet__head-caption">
+                                            <div class="m-portlet__head-title">
+												<span class="m-portlet__head-icon m--hide">
+													<i class="la la-gear"></i>
+												</span>
+                                                <h3 class="m-portlet__head-text">
+                                                    {{ .item.name }}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--begin::Form-->
+                                    <form method="post" class="m-form m-form--fit m-form--label-align-right">
+                                        <input type="hidden" name="id" value="{{ .item.id }}">
+                                        <div class="m-portlet__body">
+                                            <div class="form-group m-form__group m--margin-top-10">
+                                                {{ if eq .update "" }} <div class="alert m-alert m-alert--default" role="alert"><strong> 请谨慎修改以下配置信息：</strong></div> {{ end }}
+                                                {{ if eq .update "success" }} <div class="alert m-alert alert-success" role="alert"><strong> 操作成功 </strong></div> {{ end }}
+                                                {{ if eq .update "failed" }} <div class="alert m-alert alert-danger" role="alert"><strong> 操作失败 </strong></div> {{ end }}
+
+                                            </div>
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label">名称</label>
+                                                <div class="col-8">
+                                                    <input class="form-control m-input" type="text" name="name" value="{{ .item.name }}" id="example-text-input">
+                                                </div>
+                                                <div class="col-2">
+                                                    <input class="form-control m-input" type="color" name="color" value="#563d7c" id="example-color-input">
+                                                </div>
+                                            </div>
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-search-input" class="col-2 col-form-label">备注</label>
+                                                <div class="col-10">
+                                                    <input class="form-control m-input" type="search" name="remark" value="{{ .item.remark }}" id="example-search-input">
+                                                </div>
+                                            </div>
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-search-input" class="col-2 col-form-label">仓库地址</label>
+                                                <div class="col-10">
+                                                    <input class="form-control m-input" type="search" name="repo_url" value="{{ .item.repo_url }}" id="example-search-input">
+                                                </div>
+                                            </div>
+                                            <div class="form-group m-form__group row">
+                                                <label for="textarea" class="col-2 col-form-label">访问私钥</label>
+                                                <div class="col-10">
+                                                    <textarea class="form-control m-input" name="repo_private_key" id="textarea" rows="5">{{ .item.repo_private_key }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-email-input" class="col-2 col-form-label">邮件报告</label>
+                                                <div class="col-10">
+                                                    <input class="form-control m-input" type="email" name="notify" value="{{ .item.notify }}" id="example-email-input">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__foot m-portlet__foot--fit">
+                                            <div class="m-form__actions">
+                                                <div class="row">
+                                                    <div class="col-2">
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <button type="submit" class="btn btn-info m-btn m-btn--custom m-btn--bolder m-btn--uppercase">保存配置</button>
+                                                        <a href="/item" class="btn btn-secondary m-btn--wide">
+                                                            <i class="fa fa-trash-o text"></i><span class="text">返回列表</span>
+                                                        </a>
+                                                        <a href="/item/{{ .item.name }}/delete" class="btn btn-danger pull-right" onclick="return confirm('确认删除?')">
+                                                            <i class="fa fa-trash-o text"></i><span class="text">删除</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--end::Portlet-->
+
+							</div>
+						</div>
+						<!--End::Section-->
+
+					</div>
+				</div>
+
+				<!--</div>-->
+			</div>
+			<!-- end::Body -->
+
+			{{template "footer.html" }}
+		</div>
+
+		<!-- end:: Page -->
+
+
+		<!-- begin::Scroll Top -->
+		<div id="m_scroll_top" class="m-scroll-top">
+			<i class="la la-arrow-up"></i>
+		</div>
+
+		<!-- end::Scroll Top -->
+
+
+		<!--begin::Base Scripts -->
+		<script src="/assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
+		<script src="/assets/demo/demo2/base/scripts.bundle.js" type="text/javascript"></script>
+
+		<!--end::Base Scripts -->
+
+		<!--begin::Page Snippets -->
+		<script src="/assets/app/js/dashboard.js" type="text/javascript"></script>
+
+		<!--end::Page Snippets -->
+	</body>
+
+	<!-- end::Body -->
+</html>
+{{end}}

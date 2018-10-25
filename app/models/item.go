@@ -3,7 +3,7 @@
 package models
 
 import (
-	"DeployStation/app/service"
+	"deploy-station/app/service"
 	"log"
 	"time"
 	"strings"

@@ -2,8 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"DeployStation/app/controllers"
-	"net/http"
+	"deploy-station/app/controllers"
 )
 
 func main() {
@@ -13,14 +12,14 @@ func main() {
 	r.StaticFile("/favicon.ico", "./public/favicon.ico")
 	r.LoadHTMLGlob("app/views/**/*")
 
-	r.GET("/", func(c *gin.Context) { c.String(http.StatusOK, "ok") })
+	r.GET("/", controllers.Dashboard)
 	r.GET("/home", controllers.Dashboard)
 	r.GET("/item", controllers.ListItem)
 	r.GET("/item/:name", controllers.ShowItem)
 	r.GET("/item/:name/setting", controllers.SettingItem)
 	r.POST("/item/:name/setting", controllers.SettingItem)
-	r.GET("/tag/:name", controllers.ListTag)
-	r.GET("/push/:name/:tag", controllers.PushTag)
+	r.GET("/push/:name", controllers.PreparePush)
+	r.POST("/push/:name", controllers.ProcessPush)
 
 	r.Run(":8090")
 }
