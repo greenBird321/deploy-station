@@ -24,7 +24,8 @@ func ListItem() ([]map[string]string, error) {
 		var ctime, mtime int64
 		err := rows.Scan(&name, &repo_url, &repo_type, &remark, &ctime, &mtime)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
+			return nil, err
 		}
 		r := make(map[string]string)
 		r["name"] = name
