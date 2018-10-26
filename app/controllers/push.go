@@ -64,6 +64,7 @@ $SYNC_CMD
 			service.ExecuteCommand(statement)
 		}()
 	}
-	c.HTML(http.StatusOK, "deploy/result.html", gin.H{
+
+	c.HTML(http.StatusOK, "public/message.html", gin.H{
 	})
 }
