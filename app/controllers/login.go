@@ -11,6 +11,7 @@ import (
 )
 
 func Login(c *gin.Context) {
+	ENV, _ := env.AppEnv()
 	if c.Request.Method == "POST" {
 		username := c.DefaultPostForm("username", "")
 		password := c.DefaultPostForm("password", "")
@@ -30,9 +31,13 @@ func Login(c *gin.Context) {
 			return
 		}
 
-		ENV, _ := env.AppEnv()
-
 		c.SetCookie("uid", strconv.Itoa(int(uid)), 2592000, "/", ENV.Domain, false, true)
+		c.Redirect(http.StatusMovedPermanently, "/home")
+		return
+	}
+
+	_, err := c.Request.Cookie("uid")
+	if err == nil {
 		c.Redirect(http.StatusMovedPermanently, "/home")
 		return
 	}
