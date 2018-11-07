@@ -16,7 +16,8 @@ type MysqlConf struct {
 }
 
 type ENV struct {
-	Mysql MysqlConf `yaml:"mysql"`
+	Mysql  MysqlConf `yaml:"mysql"`
+	Domain string    `yaml:"domain"`
 }
 
 func AppEnv() (ENV, error) {
